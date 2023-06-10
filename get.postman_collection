@@ -1,0 +1,94 @@
+{
+	"info": {
+		"_postman_id": "e1f74d80-06d4-4639-aa85-8651eb159ec7",
+		"name": "get_reference",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26620083"
+	},
+	"item": [
+		{
+			"name": "get_tc1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//step 1 validate status code\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"//step 2 declare the expected result\r",
+							"const id = [7, 8, 9, 10, 11, 12]\r",
+							"const first_name = [\"Michael\",\"Lindsay\", \"Tobias\", \"Byron\", \"George\", \"Rachel\"]\r",
+							"const last_name = [\"Lawson\",\"Ferguson\",\"Funke\", \"Fields\", \"Edwards\", \"Howell\"]\r",
+							"const email=[\"michael.lawson@reqres.in\",\"lindsay.ferguson@reqres.in\",\"tobias.funke@reqres.in\",\"byron.fields@reqres.in\",\"george.edwards@reqres.in\",\"rachel.howell@reqres.in\"]\r",
+							"const avatar=[\"https://reqres.in/img/faces/7-image.jpg\",\"https://reqres.in/img/faces/8-image.jpg\",\"https://reqres.in/img/faces/9-image.jpg\",\"https://reqres.in/img/faces/10-image.jpg\",\"https://reqres.in/img/faces/11-image.jpg\",\"https://reqres.in/img/faces/12-image.jpg\"]\r",
+							"//step 3 validate response body\r",
+							"//step 3.1 fetch response body\r",
+							"var responseBody = pm.response.json();\r",
+							"//step 3.2 fetch response body data array length\r",
+							"var dataArray = responseBody.data;\r",
+							"var count = Object.keys(dataArray).length;\r",
+							"//step 3.3 fetch & validate response body parameters\r",
+							"for (i = 0; i < count; i++) {\r",
+							"    //step 3.3.1 fetch expected results\r",
+							"    var exp_id=id[i];\r",
+							"    var exp_first_name=first_name[i];\r",
+							"    var exp_last_name=last_name[i];\r",
+							"    var exp_email=email[i];\r",
+							"    var exp_avatar=avatar[i];\r",
+							"    //step 3.3.2 fetch response body parameters\r",
+							"    var res_id = responseBody.data[i].id;\r",
+							"    var res_email = responseBody.data[i].email;\r",
+							"    var res_first_name = responseBody.data[i].first_name;\r",
+							"    var res_last_name = responseBody.data[i].last_name;\r",
+							"    var res_avatar = responseBody.data[i].avatar;\r",
+							"    //step 3.3.3 validate response body\r",
+							"    pm.test(\"validate id at index \"+i,function(){\r",
+							"        pm.expect(res_id).to.eql(exp_id)\r",
+							"    })\r",
+							"     pm.test(\"validate first_name at index \"+i,function(){\r",
+							"        pm.expect(res_first_name).to.eql(exp_first_name)\r",
+							"    })\r",
+							"     pm.test(\"validate last_name at index \"+i,function(){\r",
+							"        pm.expect(res_last_name).to.eql(exp_last_name)\r",
+							"    })\r",
+							"     pm.test(\"validate email at index \"+i,function(){\r",
+							"        pm.expect(res_email).to.eql(exp_email)\r",
+							"    })\r",
+							"     pm.test(\"validate avatar at index \"+i,function(){\r",
+							"        pm.expect(res_avatar).to.eql(exp_avatar)\r",
+							"    })\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{GET_URL}}",
+					"host": [
+						"{{GET_URL}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

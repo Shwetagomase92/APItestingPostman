@@ -1,0 +1,140 @@
+{
+	"info": {
+		"_postman_id": "d56122d2-fb1c-4ccd-ad07-e4a1533ccd68",
+		"name": "refjen",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26620083"
+	},
+	"item": [
+		{
+			"name": "post_tc1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//step1 validate response status code\r",
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"//step2 set expected results \r",
+							"//step2.1 generate date in required format\r",
+							"var expectedDate=new Date().toJSON().slice(0,10);\r",
+							"//step2.2 extract request body \r",
+							"var requestBody=JSON.parse(pm.request.body.raw);\r",
+							"var req_name = requestBody.name;\r",
+							"var req_job = requestBody.job;\r",
+							"\r",
+							"//step 3 validate response body\r",
+							"//step 3.1 extract response body and save it into local variable\r",
+							"var responseBody = pm.response.json();\r",
+							"//console.log(responseBody);\r",
+							"//step 3.2 extract response body parameters from response extracted in step 3.1\r",
+							"var res_name = responseBody.name;\r",
+							"var res_id = responseBody.id;\r",
+							"var res_job = responseBody.job;\r",
+							"var res_createdAt=responseBody.createdAt;\r",
+							"//step3.3 validate response body\r",
+							"pm.test(\"validate response Body parameter: NAME\", function(){\r",
+							"pm.expect(res_name).to.eql(req_name);\r",
+							"});\r",
+							"pm.test(\"validate response Body parameter: JOB\", function(){\r",
+							"pm.expect(res_job).to.eql(req_job);\r",
+							"});\r",
+							"pm.test(\"validate response Body parameter: ID\", function(){\r",
+							"pm.expect(res_id).to.not.null;\r",
+							"});\r",
+							"pm.test(\"validate response body parameter: CREATEDAT\", function(){\r",
+							"    pm.expect(res_createdAt.slice(0,10)).to.eql(expectedDate);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"shweta\",\r\n    \"job\": \"manager\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://reqres.in/api/users",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "Coll_Random_Name",
+			"value": "",
+			"disabled": true
+		},
+		{
+			"key": "Coll_Random_Job",
+			"value": "",
+			"disabled": true
+		},
+		{
+			"key": "start",
+			"value": "0",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"key": "end",
+			"value": "5",
+			"type": "string",
+			"disabled": true
+		}
+	]
+}

@@ -1,0 +1,73 @@
+{
+	"info": {
+		"_postman_id": "678c889b-694b-49c1-8fd6-aa7cfa86762b",
+		"name": "patch_reference",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26620083"
+	},
+	"item": [
+		{
+			"name": "patch_tc1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//step 1 validate response status code\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"//step 2 set expected result\r",
+							"//step 2.1 generate expected date format\r",
+							"var expectedDate=new Date().toJSON().slice(0,10);\r",
+							"//step 2.2 extract request body parameters \r",
+							"var requestBody=JSON.parse(pm.request.body.raw);\r",
+							"//step 2.3 extract request body parameters \r",
+							"var req_name=requestBody.name;\r",
+							"var req_job=requestBody.job;\r",
+							"//step 3 validate response body\r",
+							"//step 3.1 extract response body parameters\r",
+							"var responseBody=pm.response.json();\r",
+							"//step 3.2 extract response body parameters\r",
+							"var res_name=responseBody.name;\r",
+							"var res_job=responseBody.job;\r",
+							"var res_updatedAt=responseBody.updatedAt;\r",
+							"//step 3.3 validate response body parameters\r",
+							"pm.test(\"validate response body parameters: NAME\",function(){\r",
+							"    pm.expect(res_name).to.eql(req_name);\r",
+							"});\r",
+							"pm.test(\"validate response body parameters: JOB\", function(){\r",
+							"    pm.expect(res_job).to.eql(req_job);\r",
+							"});\r",
+							"pm.test(\"validate response body parameters: UPDATEDAT\", function(){\r",
+							"    pm.expect(res_updatedAt.slice(0,10)).to.eql(expectedDate);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"shweta\",\r\n    \"job\": \"tester\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{PATCH_URL}}",
+					"host": [
+						"{{PATCH_URL}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
